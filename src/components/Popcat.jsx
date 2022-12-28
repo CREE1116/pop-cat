@@ -34,7 +34,7 @@ function Popcat() {
         <img
           className={styles.popcat}
           src={imageSRC}
-          onTouch={popDown}
+          onTouchStart={popDown}
           onTouchEnd={popUp}
         />
       </MobileView>
