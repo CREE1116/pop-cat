@@ -1,0 +1,11 @@
+.popcat {
+  width: 60%;
+  height: auto;
+  max-width: 700px;
+  min-width: 70px;
+  display: block;
+  margin: 0 auto;
+}
+.container {
+  text-align: center;
+}
