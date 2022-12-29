@@ -16,19 +16,24 @@ function Popcat(prop) {
   const press = (e) => {
     e.stopPropagation();
     // playSound();
-    console.log("press");
+    console.log(e.type);
     setPopImage(PopCat);
   };
   const release = (e) => {
     e.stopPropagation();
-    console.log("release");
+    console.log(e.type);
     setPopImage(unPopCat);
     setCount((prev) => prev + 1);
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", (e) => press(e), false);
-    document.addEventListener("mouseup", (e) => release(e), false);
+    if (isMobile) {
+      document.addEventListener("touchstart", (e) => press(e), false);
+      document.addEventListener("touchend", (e) => release(e), false);
+    } else {
+      document.addEventListener("mousedown", (e) => press(e), false);
+      document.addEventListener("mouseup", (e) => release(e), false);
+    }
   }, []);
   return (
     <>
