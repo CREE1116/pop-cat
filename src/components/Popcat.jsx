@@ -8,14 +8,20 @@ import { isMobile } from "react-device-detect";
 function Popcat(prop) {
   const [popImage, setPopImage] = useState(unPopCat);
   const [count, setCount] = useState(0);
-  const playSound = () => {
-    const audio = new Audio(sound);
-    audio.currentTime = 0;
-    audio.play();
+  const getAudio = async () => {
+    const audioContext = new AudioContext();
+    const res = await fetch(sound); // [1]
+    const arrayBuffer = await res.arrayBuffer(); // [2]
+    const audioBuffer = await audioContext.decodeAudioData(arrayBuffer); // [3]
+    const trackSource = audioContext.createBufferSource(); // 소스 노드를 만들고...
+    trackSource.buffer = audioBuffer; // 오디오 버퍼를 전달합니다.
+    trackSource.connect(audioContext.destination);
+    trackSource.start();
   };
+
   const press = (e) => {
     e.stopPropagation();
-    // playSound();
+    getAudio();
     console.log(e.type);
     setPopImage(PopCat);
   };
@@ -25,7 +31,6 @@ function Popcat(prop) {
     setPopImage(unPopCat);
     setCount((prev) => prev + 1);
   };
-
   useEffect(() => {
     if (isMobile) {
       document.addEventListener("touchstart", (e) => press(e), false);
