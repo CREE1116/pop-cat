@@ -6,14 +6,18 @@ import styles from "./Popcat.module.css";
 import { isMobile } from "react-device-detect";
 
 function Popcat(prop) {
-  const audio = new Audio(sound);
   const [popImage, setPopImage] = useState(unPopCat);
   const [count, setCount] = useState(0);
+  const playSound = () => {
+    const audio = new Audio(sound);
+    audio.currentTime = 0;
+    audio.play();
+  };
   const press = (e) => {
     e.stopPropagation();
+    playSound();
     console.log("press");
     setPopImage(PopCat);
-    audio.play();
   };
   const release = (e) => {
     e.stopPropagation();
