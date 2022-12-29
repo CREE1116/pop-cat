@@ -8,14 +8,15 @@ import { isMobile } from "react-device-detect";
 function Popcat(prop) {
   const [popImage, setPopImage] = useState(unPopCat);
   const [count, setCount] = useState(0);
+  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
   const getAudio = async () => {
-    const audioContext = new AudioContext();
     const res = await fetch(sound); // [1]
     const arrayBuffer = await res.arrayBuffer(); // [2]
     const audioBuffer = await audioContext.decodeAudioData(arrayBuffer); // [3]
     const trackSource = audioContext.createBufferSource(); // 소스 노드를 만들고...
     trackSource.buffer = audioBuffer; // 오디오 버퍼를 전달합니다.
     trackSource.connect(audioContext.destination);
+    console.log("audio play");
     trackSource.start();
   };
 
