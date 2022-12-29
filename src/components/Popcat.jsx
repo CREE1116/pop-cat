@@ -15,7 +15,7 @@ function Popcat(prop) {
   };
   const press = (e) => {
     e.stopPropagation();
-    playSound();
+    // playSound();
     console.log("press");
     setPopImage(PopCat);
   };
@@ -25,30 +25,10 @@ function Popcat(prop) {
     setPopImage(unPopCat);
     setCount((prev) => prev + 1);
   };
-  function getConvertedEventType(type) {
-    if (isMobile) {
-      if (type === "mousedown") {
-        console.log("touchstart");
-        type = "touchstart";
-      } else if (type === "mouseup") {
-        console.log("touchend");
-        type = "touchend";
-      }
-    }
 
-    return type;
-  }
   useEffect(() => {
-    document.addEventListener(
-      getConvertedEventType("mousedown"),
-      (e) => press(e),
-      false
-    );
-    document.addEventListener(
-      getConvertedEventType("mouseup"),
-      (e) => release(e),
-      false
-    );
+    document.addEventListener("mousedown", (e) => press(e), false);
+    document.addEventListener("mouseup", (e) => release(e), false);
   }, []);
   return (
     <>
