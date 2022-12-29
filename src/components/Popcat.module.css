@@ -5,6 +5,7 @@
   min-width: 70px;
   display: block;
   margin: 0 auto;
+  -webkit-tap-highlight-color: transparent;
 }
 .container {
   text-align: center;

@@ -3,43 +3,27 @@ import sound from "../sound/pop-cat-original-meme_3ObdYkj.mp3";
 import PopCat from "../img/pop-cat.png";
 import unPopCat from "../img/unpop-cat.png";
 import styles from "./Popcat.module.css";
-import {
-  BrowserView,
-  MobileView,
-  isBrowser,
-  isMobile,
-} from "react-device-detect";
-function Popcat() {
-  const [imageSRC, changeImage] = useState(unPopCat);
-
-  const popDown = () => {
-    changeImage(PopCat);
-    const audio = new Audio(sound);
+import { BrowserView, MobileView } from "react-device-detect";
+function Popcat(prop) {
+  const audio = new Audio(sound);
+  const [popImage, setPopImage] = useState(unPopCat);
+  const press = () => {
+    setPopImage(PopCat);
     audio.play();
   };
-  const popUp = () => {
-    changeImage(unPopCat);
+  const release = () => {
+    setPopImage(unPopCat);
   };
   return (
     <div className={styles.container}>
-      <BrowserView>
-        <img
-          className={styles.popcat}
-          src={imageSRC}
-          onMouseDown={popDown}
-          onMouseUp={popUp}
-        />
-      </BrowserView>
-      <MobileView>
-        <img
-          className={styles.popcat}
-          src={imageSRC}
-          onTouchStart={popDown}
-          onTouchEnd={popUp}
-        />
-      </MobileView>
+      <img
+        src={popImage}
+        alt="popcat"
+        className={styles.popcat}
+        onMouseDown={press}
+        onMouseUp={release}
+      />
     </div>
   );
 }
-
 export default Popcat;
