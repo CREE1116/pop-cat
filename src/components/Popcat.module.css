@@ -4,9 +4,26 @@
   max-width: 700px;
   min-width: 70px;
   display: block;
-  margin: 0 auto;
+  margin: auto auto;
   -webkit-tap-highlight-color: transparent;
 }
 .container {
   text-align: center;
+}
+.title {
+  font-size: 5rem;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+.counter {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+* {
+  background-color: black;
 }
