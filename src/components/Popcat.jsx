@@ -3,16 +3,17 @@ import sound from "../sound/pop-cat-original-meme_3ObdYkj.mp3";
 import PopCat from "../img/pop-cat.png";
 import unPopCat from "../img/unpop-cat.png";
 import styles from "./Popcat.module.css";
-import useSound from "use-sound";
 import { isMobile } from "react-device-detect";
+import effectSound from "../effectSound";
 
 function Popcat(prop) {
   const [popImage, setPopImage] = useState(unPopCat);
   const [count, setCount] = useState(0);
-
+  const es = effectSound(sound, 1);
   const press = (e) => {
     e.stopPropagation();
     console.log(e.type);
+    es.play();
     setPopImage(PopCat);
   };
   const release = (e) => {
@@ -30,19 +31,12 @@ function Popcat(prop) {
       document.addEventListener("mouseup", (e) => release(e), false);
     }
   }, []);
-  const [popsound] = useSound(sound, { volume: 0.5 });
   return (
     <>
       <div className={styles.container}>
         <h1 className={styles.title}>POP CAT</h1>
         <h1 className={styles.counter}>{count}</h1>
-        <img
-          src={popImage}
-          alt="popcat"
-          className={styles.popcat}
-          onMouseDown={popsound}
-          touchstart={popsound}
-        />
+        <img src={popImage} alt="popcat" className={styles.popcat} />
       </div>
     </>
   );
