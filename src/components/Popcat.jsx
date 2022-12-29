@@ -3,26 +3,15 @@ import sound from "../sound/pop-cat-original-meme_3ObdYkj.mp3";
 import PopCat from "../img/pop-cat.png";
 import unPopCat from "../img/unpop-cat.png";
 import styles from "./Popcat.module.css";
+import useSound from "use-sound";
 import { isMobile } from "react-device-detect";
 
 function Popcat(prop) {
   const [popImage, setPopImage] = useState(unPopCat);
   const [count, setCount] = useState(0);
-  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  const getAudio = async () => {
-    const res = await fetch(sound); // [1]
-    const arrayBuffer = await res.arrayBuffer(); // [2]
-    const audioBuffer = await audioContext.decodeAudioData(arrayBuffer); // [3]
-    const trackSource = audioContext.createBufferSource(); // 소스 노드를 만들고...
-    trackSource.buffer = audioBuffer; // 오디오 버퍼를 전달합니다.
-    trackSource.connect(audioContext.destination);
-    console.log("audio play");
-    trackSource.start();
-  };
 
   const press = (e) => {
     e.stopPropagation();
-    getAudio();
     console.log(e.type);
     setPopImage(PopCat);
   };
@@ -41,12 +30,19 @@ function Popcat(prop) {
       document.addEventListener("mouseup", (e) => release(e), false);
     }
   }, []);
+  const [popsound] = useSound(sound, { volume: 0.5 });
   return (
     <>
       <div className={styles.container}>
         <h1 className={styles.title}>POP CAT</h1>
         <h1 className={styles.counter}>{count}</h1>
-        <img src={popImage} alt="popcat" className={styles.popcat} />
+        <img
+          src={popImage}
+          alt="popcat"
+          className={styles.popcat}
+          onMouseDown={popsound}
+          touchstart={popsound}
+        />
       </div>
     </>
   );
