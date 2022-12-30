@@ -5,11 +5,12 @@ import unPopCat from "../img/unpop-cat.png";
 import styles from "./Popcat.module.css";
 import { isMobile } from "react-device-detect";
 import effectSound from "../effectSound";
-import Ranking from "./Ranking";
+import { useSelector, useDispatch } from "react-redux";
 
 function Popcat(prop) {
   const [popImage, setPopImage] = useState(unPopCat);
-  const [count, setCount] = useState(0);
+  const CountNum = useSelector((state) => state.count);
+  const dispatch = useDispatch();
   const es = effectSound(sound, 1);
   const press = (e) => {
     e.stopPropagation();
@@ -21,7 +22,7 @@ function Popcat(prop) {
     e.stopPropagation();
     console.log(e.type);
     setPopImage(unPopCat);
-    setCount((prev) => prev + 1);
+    dispatch({ type: "INCREASE" });
   };
   useEffect(() => {
     const popcatEliment = document.getElementById("popcatId");
@@ -45,7 +46,7 @@ function Popcat(prop) {
     <>
       <div className={styles.container}>
         <h1 className={styles.title}>POP CAT</h1>
-        <h1 className={styles.counter}>{count}</h1>
+        <h1 className={styles.counter}>{CountNum}</h1>
         <img
           src={popImage}
           alt="popcat"
