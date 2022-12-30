@@ -1,0 +1,30 @@
+.title {
+  color: white;
+}
+.Ranking > li {
+  color: white;
+}
+
+.onlineButton {
+  background-color: #906f54;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  padding: 5px 5px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.RankingDiv {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+@media screen and (max-width: 700px) {
+  .RankingDiv {
+    position: static;
+  }
+}

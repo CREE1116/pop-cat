@@ -5,6 +5,7 @@ import unPopCat from "../img/unpop-cat.png";
 import styles from "./Popcat.module.css";
 import { isMobile } from "react-device-detect";
 import effectSound from "../effectSound";
+import Ranking from "./Ranking";
 
 function Popcat(prop) {
   const [popImage, setPopImage] = useState(unPopCat);
@@ -23,12 +24,21 @@ function Popcat(prop) {
     setCount((prev) => prev + 1);
   };
   useEffect(() => {
+    const popcatEliment = document.getElementById("popcatId");
     if (isMobile) {
-      document.addEventListener("touchstart", (e) => press(e), false);
-      document.addEventListener("touchend", (e) => release(e), false);
+      popcatEliment.addEventListener("touchstart", (e) => press(e), false);
+      popcatEliment.addEventListener("touchend", (e) => release(e), false);
+      return () => {
+        popcatEliment.removeEventListener("touchstart", (e) => press(e), false);
+        popcatEliment.removeEventListener("touchend", (e) => release(e), false);
+      };
     } else {
-      document.addEventListener("mousedown", (e) => press(e), false);
-      document.addEventListener("mouseup", (e) => release(e), false);
+      popcatEliment.addEventListener("mousedown", (e) => press(e), false);
+      popcatEliment.addEventListener("mouseup", (e) => release(e), false);
+      return () => {
+        popcatEliment.removeEventListener("touchstart", (e) => press(e), false);
+        popcatEliment.removeEventListener("touchend", (e) => release(e), false);
+      };
     }
   }, []);
   return (
@@ -36,7 +46,12 @@ function Popcat(prop) {
       <div className={styles.container}>
         <h1 className={styles.title}>POP CAT</h1>
         <h1 className={styles.counter}>{count}</h1>
-        <img src={popImage} alt="popcat" className={styles.popcat} />
+        <img
+          src={popImage}
+          alt="popcat"
+          className={styles.popcat}
+          id="popcatId"
+        />
       </div>
     </>
   );
