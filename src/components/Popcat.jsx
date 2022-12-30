@@ -14,13 +14,11 @@ function Popcat(prop) {
   const es = effectSound(sound, 1);
   const press = (e) => {
     e.stopPropagation();
-    console.log(e.type);
     es.play();
     setPopImage(PopCat);
   };
   const release = (e) => {
     e.stopPropagation();
-    console.log(e.type);
     setPopImage(unPopCat);
     dispatch({ type: "INCREASE" });
   };

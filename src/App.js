@@ -4,7 +4,7 @@ import Ranking from "./components/Ranking";
 import styles from "./App.module.css";
 import reducer from "./store";
 import { createStore } from "redux";
-import { Provider, useSelector, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 
 function App() {
   const store = createStore(reducer);

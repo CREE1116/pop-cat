@@ -1,58 +1,38 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Ranking.module.css";
-import Modal from "./Modal";
+import { useDispatch, useSelector } from "react-redux";
 function Ranking(props) {
-  const [RankinMode, setRankinMode] = useState(false);
-  const [nickName, setNickName] = useState("");
-  const [modalOpen, setModalOpen] = useState(false);
+  const [RankingMode, setRankingMode] = useState(false);
+
+  const count = useSelector((state) => state.count);
   useEffect(() => {
     const onlineButton = document.getElementsByClassName(
       styles.onlineButton
     )[0];
     onlineButton.addEventListener("click", () => {
-      setRankinMode((prev) => !prev);
-      setModalOpen(true);
+      setRankingMode((prev) => !prev);
     });
     return () => {
       onlineButton.removeEventListener("click", () => {
-        setRankinMode((prev) => !prev);
+        setRankingMode((prev) => !prev);
       });
     };
   }, []);
-  const isEnter = (e) => {
-    if (e.key === "Enter") {
-      console.log("enter", e.target.value);
-      setNickName(e.target.value);
-      setModalOpen(false);
-    }
-  };
-  useEffect(() => {
-    const nickNameInput = document.getElementById("nickNameInput");
-    if (nickNameInput) {
-      nickNameInput.addEventListener("keydown", (e) => isEnter(e));
-    }
-    return () => {
-      if (nickNameInput) {
-        nickNameInput.removeEventListener("keydown", (e) => isEnter(e));
-      }
-    };
-  }, [RankinMode]);
   return (
     <div className={styles.RankingDiv}>
       <button className={styles.onlineButton}>
-        {RankinMode ? "오프라인가자!" : "온라인가자!"}
+        {RankingMode ? "오프라인가자!" : "온라인가자!"}
       </button>
-      <Modal open={modalOpen} close={() => setModalOpen(false)}>
-        <p>사용할 이름을 입력해주시죠</p>
-        <input type="text" id="nickNameInput" />
-      </Modal>
-      {RankinMode ? (
+      {RankingMode ? (
         <>
-          <h1 className={styles.title}>Ranking</h1>
-          <ul className={styles.Ranking}>
-            <li>ranking1</li>
-            <li>ranking2</li>
-          </ul>
+          <div className={styles.rankList}>
+            <h1 className={styles.title}>Ranking</h1>
+            <ul className={styles.Ranking}>
+              <li>ranking1</li>
+              <li>ranking2</li>
+            </ul>
+            <p>YOU : {count}</p>
+          </div>
         </>
       ) : null}
     </div>

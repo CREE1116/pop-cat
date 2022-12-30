@@ -3,7 +3,6 @@ function reducer(state, action) {
     return {
       count: 0,
       ranking: [],
-      userName: "",
     };
   }
   const newState = { ...state };
@@ -22,9 +21,6 @@ function reducer(state, action) {
       break;
     case "RANKING":
       newState.ranking = action.ranking;
-      break;
-    case "SET_USER_NAME":
-      newState.userName = action.userName;
       break;
     default:
       break;
