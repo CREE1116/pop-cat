@@ -6,7 +6,8 @@ function Ranking(props) {
   const [RankingMode, setRankingMode] = useState(false);
   const dispatch = useDispatch();
   const count = useSelector((state) => state.count);
-  const Top10 = useSelector((state) => state.Top10);
+  const Top10 = useSelector((state) => state.top10);
+  const id = useSelector((state) => state.id);
   const ranking = useSelector((state) => state.ranking);
 
   useEffect(() => {
@@ -22,7 +23,11 @@ function Ranking(props) {
       });
     };
   }, []);
-
+  useEffect(() => {
+    if (RankingMode) {
+      dispatch({ type: "ONLINE" });
+    } else dispatch({ type: "OFFLINE" });
+  }, [RankingMode]);
   return (
     <div className={styles.RankingDiv}>
       <button className={styles.onlineButton}>
@@ -32,9 +37,17 @@ function Ranking(props) {
         <>
           <div className={styles.rankList}>
             <h1 className={styles.title}>Ranking</h1>
-
+            {Top10 === undefined ? null : (
+              <div className={styles.rankList}>
+                {Top10.map((item, index) => (
+                  <p key={item.id.substring(0, 5)}>
+                    {item.ranking}등: {item.id.substring(0, 5)} ({item.count})
+                  </p>
+                ))}
+              </div>
+            )}
             <p>
-              YOU : {ranking}({count})
+              YOU :{ranking}등 {id.substring(0, 5)} ({count})
             </p>
           </div>
         </>

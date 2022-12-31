@@ -5,6 +5,7 @@ function reducer(state, action) {
       count: 0,
       ranking: 0,
       top10: [],
+      onlineMode: false,
     };
   }
   const newState = { ...state };
@@ -29,6 +30,12 @@ function reducer(state, action) {
       break;
     case "ID":
       newState.id = action.id;
+      break;
+    case "ONLINE":
+      newState.onlineMode = true;
+      break;
+    case "OFFLINE":
+      newState.onlineMode = false;
       break;
     default:
       break;

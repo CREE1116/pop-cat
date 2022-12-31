@@ -28,12 +28,9 @@
   padding: 0;
   overflow: hidden;
 }
-.rankList > li {
-  float: left;
-}
 .rankList > p {
-  display: inline;
   color: white;
+  font-size: small;
 }
 @media screen and (max-width: 700px) {
   .RankingDiv {

@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 function Popcat(prop) {
   const [popImage, setPopImage] = useState(unPopCat);
   const CountNum = useSelector((state) => state.count);
+  const id = useSelector((state) => state.id);
   const dispatch = useDispatch();
   const es = effectSound(sound, 1);
   const press = (e) => {
