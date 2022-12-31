@@ -12,11 +12,12 @@ function App() {
   const count = useSelector((state) => state.count);
   const ws = useRef(null);
   const dispatch = useDispatch();
+  const wsurl =
+    "ws://port-0-pop-cat-server-cf24lca6hcal.gksl2.cloudtype.app/popcat_server";
   useEffect(() => {
     if (online) {
-      ws.current = new WebSocket(
-        "ws://port-0-pop-cat-server-cf24lca6hcal.gksl2.cloudtype.app/popcat_server"
-      );
+      console.log("connecting to  ", wsurl);
+      ws.current = new WebSocket(wsurl);
       ws.current.onopen = () => {
         console.log("connected");
       };
