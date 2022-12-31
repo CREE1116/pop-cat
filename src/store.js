@@ -1,8 +1,10 @@
 function reducer(state, action) {
   if (state === undefined) {
     return {
+      id: "",
       count: 0,
-      ranking: [],
+      ranking: 0,
+      top10: [],
     };
   }
   const newState = { ...state };
@@ -21,6 +23,12 @@ function reducer(state, action) {
       break;
     case "RANKING":
       newState.ranking = action.ranking;
+      break;
+    case "TOP10":
+      newState.top10 = action.top10;
+      break;
+    case "ID":
+      newState.id = action.id;
       break;
     default:
       break;

@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./Ranking.module.css";
 import { useDispatch, useSelector } from "react-redux";
+
 function Ranking(props) {
   const [RankingMode, setRankingMode] = useState(false);
-
+  const dispatch = useDispatch();
   const count = useSelector((state) => state.count);
+  const Top10 = useSelector((state) => state.Top10);
+  const ranking = useSelector((state) => state.ranking);
+
   useEffect(() => {
     const onlineButton = document.getElementsByClassName(
       styles.onlineButton
@@ -18,6 +22,7 @@ function Ranking(props) {
       });
     };
   }, []);
+
   return (
     <div className={styles.RankingDiv}>
       <button className={styles.onlineButton}>
@@ -27,11 +32,10 @@ function Ranking(props) {
         <>
           <div className={styles.rankList}>
             <h1 className={styles.title}>Ranking</h1>
-            <ul className={styles.Ranking}>
-              <li>ranking1</li>
-              <li>ranking2</li>
-            </ul>
-            <p>YOU : {count}</p>
+
+            <p>
+              YOU : {ranking}({count})
+            </p>
           </div>
         </>
       ) : null}

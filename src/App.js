@@ -12,7 +12,6 @@ function App() {
     <div className={styles.container}>
       <Provider store={store}>
         <Popcat />
-        <Ranking />
       </Provider>
     </div>
   );
