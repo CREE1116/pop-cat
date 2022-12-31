@@ -13,7 +13,7 @@ function App() {
   const ws = useRef(null);
   const dispatch = useDispatch();
   const wsurl =
-    "ws://port-0-pop-cat-server-cf24lca6hcal.gksl2.cloudtype.app/popcat_server";
+    "wss://port-0-pop-cat-server-cf24lca6hcal.gksl2.cloudtype.app/popcat_server";
   useEffect(() => {
     if (online) {
       console.log("connecting to  ", wsurl);
