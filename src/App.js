@@ -14,7 +14,9 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     if (online) {
-      ws.current = new WebSocket("ws://localhost:8080/popcat_server");
+      ws.current = new WebSocket(
+        "ws://port-0-pop-cat-server-cf24lca6hcal.gksl2.cloudtype.app/popcat_server"
+      );
       ws.current.onopen = () => {
         console.log("connected");
       };
