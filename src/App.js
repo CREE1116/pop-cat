@@ -5,15 +5,19 @@ import styles from "./App.module.css";
 import reducer from "./store";
 import { createStore } from "redux";
 import { Provider, useSelector, useDispatch } from "react-redux";
+import ModalBasic from "./components/ModalBasic";
 
 function App() {
   const online = useSelector((state) => state.onlineMode);
   const id = useSelector((state) => state.id);
   const count = useSelector((state) => state.count);
+  const rankingMode = useSelector((state) => state.rankingMode);
+  const modal = useSelector((state) => state.modal);
+  const name = useSelector((state) => state.nickname);
   const ws = useRef(null);
   const dispatch = useDispatch();
-  const wsurl =
-    "wss://port-0-pop-cat-server-cf24lca6hcal.gksl2.cloudtype.app/popcat_server";
+  const wsurl = "ws://localhost:8080/popcat_server";
+  //"wss://port-0-pop-cat-server-cf24lca6hcal.gksl2.cloudtype.app/popcat_server";
   useEffect(() => {
     if (online) {
       console.log("connecting to  ", wsurl);
@@ -30,13 +34,19 @@ function App() {
           dispatch({ type: "TOP10", top10: data.data });
           console.log(data.data);
         } else if (data.type === "id") {
-          dispatch({ type: "ID", id: data.data });
+          if (id.length < 1) {
+            dispatch({ type: "ID", id: data.data });
+          }
           console.log(data.data);
         }
       };
       ws.current.onclose = () => {
         console.log("disconnected");
         dispatch({ type: "OFFLINE" });
+        if (rankingMode) {
+          dispatch({ type: "ONLINE" });
+          console.log("reconnecting");
+        }
       };
     }
     return () => {
@@ -56,6 +66,7 @@ function App() {
       );
       ws.current.send(
         JSON.stringify({
+          type: "count",
           id: id,
           count: count,
         })
@@ -63,8 +74,22 @@ function App() {
     }
   }, [count]);
 
+  useEffect(() => {
+    if (online) {
+      console.log("sending nickname: ", name, " id: ", id, " to server");
+      ws.current.send(
+        JSON.stringify({
+          type: "nickname",
+          id: id,
+          name: name,
+        })
+      );
+    }
+  }, [name]);
+
   return (
     <div className={styles.container}>
+      {modal ? <ModalBasic /> : null}
       <Popcat />
       <Ranking />
     </div>

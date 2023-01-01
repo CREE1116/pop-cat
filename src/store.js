@@ -6,6 +6,9 @@ function reducer(state, action) {
       ranking: 0,
       top10: [],
       onlineMode: false,
+      rankingMode: false,
+      modal: false,
+      nickname: "",
     };
   }
   const newState = { ...state };
@@ -36,6 +39,15 @@ function reducer(state, action) {
       break;
     case "OFFLINE":
       newState.onlineMode = false;
+      break;
+    case "RANKING_MODE":
+      newState.rankingMode = action.mode;
+      break;
+    case "MODAL":
+      newState.modal = action.modal;
+      break;
+    case "NICKNAME":
+      newState.nickname = action.nickname;
       break;
     default:
       break;
