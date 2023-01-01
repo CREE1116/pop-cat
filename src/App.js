@@ -40,9 +40,10 @@ function App() {
           console.log(data.data);
         }
       };
-      ws.current.onclose = () => {
+      ws.current.onclose = (e) => {
         console.log("disconnected");
         dispatch({ type: "OFFLINE" });
+        console.log(e);
         if (rankingMode) {
           dispatch({ type: "ONLINE" });
           console.log("reconnecting");
