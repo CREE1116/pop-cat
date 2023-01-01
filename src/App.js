@@ -2,9 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import Popcat from "./components/Popcat";
 import Ranking from "./components/Ranking";
 import styles from "./App.module.css";
-import reducer from "./store";
-import { createStore } from "redux";
-import { Provider, useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ModalBasic from "./components/ModalBasic";
 
 function App() {
@@ -44,10 +42,6 @@ function App() {
         console.log("disconnected");
         dispatch({ type: "OFFLINE" });
         console.log(e);
-        if (rankingMode) {
-          dispatch({ type: "ONLINE" });
-          console.log("reconnecting");
-        }
       };
     }
     return () => {
@@ -58,13 +52,15 @@ function App() {
   }, [online]);
 
   useEffect(() => {
-    if (online) {
-      console.log(
-        JSON.stringify({
-          id: id,
-          count: count,
-        })
-      );
+    console.log(
+      "count: ",
+      count,
+      " online: ",
+      online,
+      " rankingMode: ",
+      rankingMode
+    );
+    if (online && rankingMode) {
       ws.current.send(
         JSON.stringify({
           type: "count",
@@ -72,12 +68,13 @@ function App() {
           count: count,
         })
       );
+    } else if (!online && rankingMode) {
+      dispatch({ type: "ONLINE" });
     }
   }, [count]);
 
   useEffect(() => {
     if (online) {
-      console.log("sending nickname: ", name, " id: ", id, " to server");
       ws.current.send(
         JSON.stringify({
           type: "nickname",

@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import ModalBasic from "./ModalBasic";
 
 function Ranking(props) {
-  const [RankingMode, setRankingMode] = useState(false);
   const dispatch = useDispatch();
   const count = useSelector((state) => state.count);
   const Top10 = useSelector((state) => state.top10);
   const id = useSelector((state) => state.id);
   const name = useSelector((state) => state.nickname);
+  const rankingMode = useSelector((state) => state.rankingMode);
   const ranking = useSelector((state) => state.ranking);
 
   useEffect(() => {
@@ -17,26 +17,25 @@ function Ranking(props) {
       styles.onlineButton
     )[0];
     onlineButton.addEventListener("click", () => {
-      setRankingMode((prev) => !prev);
-      dispatch({ type: "RANKING_MODE", mode: RankingMode });
+      dispatch({ type: "RANKING_MODE", mode: !rankingMode });
     });
     return () => {
       onlineButton.removeEventListener("click", () => {
-        setRankingMode((prev) => !prev);
+        dispatch({ type: "RANKING_MODE", mode: !rankingMode });
       });
     };
-  }, []);
+  }, [rankingMode]);
   useEffect(() => {
-    if (RankingMode) {
+    if (rankingMode) {
       dispatch({ type: "ONLINE" });
     } else dispatch({ type: "OFFLINE" });
-  }, [RankingMode]);
+  }, [rankingMode]);
   return (
     <div className={styles.RankingDiv}>
       <button className={styles.onlineButton}>
-        {RankingMode ? "오프라인가자!" : "온라인가자!"}
+        {rankingMode ? "오프라인가자!" : "온라인가자!"}
       </button>
-      {RankingMode ? (
+      {rankingMode ? (
         <>
           <button
             className={styles.onlineButton}
