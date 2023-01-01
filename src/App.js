@@ -103,6 +103,7 @@ function App() {
         {id.length < 1 ? null : <p> 아이디: {id}</p>}
       </div>
       <Ranking />
+      <footer><a href='https://github.com/CREE1116'>개발자 깃허브 가기</a></footer>
     </div>
   );
 }
