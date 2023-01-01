@@ -7,7 +7,8 @@ function reducer(state, action) {
       top10: [],
       onlineMode: false,
       rankingMode: false,
-      modal: false,
+      nicknamemodal: false,
+      loginmodal: false,
       nickname: "",
     };
   }
@@ -32,7 +33,9 @@ function reducer(state, action) {
       newState.top10 = action.top10;
       break;
     case "ID":
-      newState.id = action.id;
+      if (action.id !== undefined && action.id.length > 0) {
+        newState.id = action.id;
+      }
       break;
     case "ONLINE":
       newState.onlineMode = true;
@@ -41,10 +44,14 @@ function reducer(state, action) {
       newState.onlineMode = false;
       break;
     case "RANKING_MODE":
+      console.log("ranking mode", action.mode);
       newState.rankingMode = action.mode;
       break;
-    case "MODAL":
-      newState.modal = action.modal;
+    case "NICKNAMEMODAL":
+      newState.nicknamemodal = action.nicknamemodal;
+      break;
+    case "LOGINMODAL":
+      newState.loginmodal = action.loginmodal;
       break;
     case "NICKNAME":
       newState.nickname = action.nickname;

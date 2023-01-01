@@ -1,12 +1,12 @@
 import styles from "./ModalBasic.module.css";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-function ModalBasic(prop) {
+function NicknameModal(prop) {
   const dispatch = useDispatch();
   const [nickname, setNickname] = useState("");
   // 모달 끄기
   const closeModal = () => {
-    dispatch({ type: "MODAL", modal: false });
+    dispatch({ type: "NICKNAMEMODAL", modal: false });
   };
 
   const onClickButton = () => {
@@ -25,6 +25,18 @@ function ModalBasic(prop) {
       onClickButton();
     }
   };
+  useEffect(() => {
+    document.body.style.cssText = `
+      position: fixed; 
+      top: -${window.scrollY}px;
+      overflow-y: scroll;
+      width: 100%;`;
+    return () => {
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = "";
+      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
+    };
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -50,4 +62,4 @@ function ModalBasic(prop) {
     </div>
   );
 }
-export default ModalBasic;
+export default NicknameModal;

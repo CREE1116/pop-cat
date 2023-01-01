@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./Ranking.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import ModalBasic from "./ModalBasic";
 
 function Ranking(props) {
   const dispatch = useDispatch();
@@ -11,28 +10,29 @@ function Ranking(props) {
   const name = useSelector((state) => state.nickname);
   const rankingMode = useSelector((state) => state.rankingMode);
   const ranking = useSelector((state) => state.ranking);
-
-  useEffect(() => {
-    const onlineButton = document.getElementsByClassName(
-      styles.onlineButton
-    )[0];
-    onlineButton.addEventListener("click", () => {
-      dispatch({ type: "RANKING_MODE", mode: !rankingMode });
-    });
-    return () => {
-      onlineButton.removeEventListener("click", () => {
-        dispatch({ type: "RANKING_MODE", mode: !rankingMode });
-      });
-    };
-  }, [rankingMode]);
+  const nicknamemodal = useSelector((state) => state.nicknamemodal);
+  const loginmodal = useSelector((state) => state.loginmodal);
   useEffect(() => {
     if (rankingMode) {
       dispatch({ type: "ONLINE" });
     } else dispatch({ type: "OFFLINE" });
   }, [rankingMode]);
+
+  function onClickButton() {
+    if (!(nicknamemodal || loginmodal)) {
+      if (!rankingMode && id.length > 0 && id !== undefined) {
+        dispatch({ type: "RANKING_MODE", mode: true });
+      } else if (!rankingMode) {
+        dispatch({ type: "LOGINMODAL", loginmodal: true });
+      } else {
+        dispatch({ type: "RANKING_MODE", mode: false });
+      }
+    }
+  }
+
   return (
     <div className={styles.RankingDiv}>
-      <button className={styles.onlineButton}>
+      <button className={styles.onlineButton} onClick={onClickButton}>
         {rankingMode ? "오프라인가자!" : "온라인가자!"}
       </button>
       {rankingMode ? (
@@ -40,7 +40,7 @@ function Ranking(props) {
           <button
             className={styles.onlineButton}
             onClick={() => {
-              dispatch({ type: "MODAL", modal: true });
+              dispatch({ type: "NICKNAMEMODAL", nicknamemodal: true });
             }}
           >
             닉네임 입력

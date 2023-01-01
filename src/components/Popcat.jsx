@@ -44,7 +44,6 @@ function Popcat(prop) {
   return (
     <>
       <div className={styles.container}>
-        <h1 className={styles.title}>POP CAT</h1>
         <h1 className={styles.counter}>{CountNum}</h1>
         <img
           src={popImage}
