@@ -1,7 +1,7 @@
 import styles from "./ModalBasic.module.css";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-function NicknameModal(prop) {
+function LoginModal(prop) {
   const dispatch = useDispatch();
   const [id, setID] = useState("");
   // 모달 끄기
@@ -52,9 +52,9 @@ function NicknameModal(prop) {
         onKeyDown={enterPress}
       ></input>
       <button onClick={onClickButton} id="enterButton">
-        없으면 그냥 넘어가자구요!
+        없으면 그냥 넘어가자구요!(엔터)
       </button>
     </div>
   );
 }
-export default NicknameModal;
+export default LoginModal;

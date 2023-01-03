@@ -34,6 +34,7 @@ function reducer(state, action) {
       break;
     case "ID":
       if (action.id !== undefined && action.id.length > 0) {
+        console.log("set id", action.id);
         newState.id = action.id;
       }
       break;
@@ -44,7 +45,6 @@ function reducer(state, action) {
       newState.onlineMode = false;
       break;
     case "RANKING_MODE":
-      console.log("ranking mode", action.mode);
       newState.rankingMode = action.mode;
       break;
     case "NICKNAMEMODAL":
@@ -55,8 +55,6 @@ function reducer(state, action) {
       break;
     case "NICKNAME":
       newState.nickname = action.nickname;
-      break;
-    default:
       break;
   }
   return newState;
