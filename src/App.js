@@ -39,7 +39,9 @@ function App() {
         } else if (data.type === "id") {
           console.log("id", data.data);
           if (id.length < 1) {
+            console.log("id is not exist, set Id", data.data);
             dispatch({ type: "ID", id: data.data });
+            localStorage.setItem("tempId", data.data);
           } else {
             console.log("id is exist", data.data);
             localStorage.setItem("tempId", data.data);
