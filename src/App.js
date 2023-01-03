@@ -5,19 +5,23 @@ import styles from "./App.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import NicknameModal from "./components/NicknameModal";
 import LoginModal from "./components/LoginModal";
+import useNetwork from "./useNetwork";
 
 function App() {
   const onlineMode = useSelector((state) => state.onlineMode);
   const id = useSelector((state) => state.id);
   const count = useSelector((state) => state.count);
-  const rankingMode = useSelector((state) => state.rankingMode);
   const nicknamemodal = useSelector((state) => state.nicknamemodal);
   const loginmodal = useSelector((state) => state.loginmodal);
   const changeId = useSelector((state) => state.changeId);
   const name = useSelector((state) => state.nickname);
   const ws = useRef(null);
   const dispatch = useDispatch();
-  const wsurl = //"ws://localhost:8080/popcat_server";
+  const handleNetworkChange = (online) => {
+    console.log(online ? "We just went online" : "We are offline");
+  };
+  const networkState = useNetwork(handleNetworkChange);
+  const wsurl = // "ws://localhost:8080/popcat_server";
     "wss://port-0-pop-cat-server-cf24lca6hcal.gksl2.cloudtype.app/popcat_server";
   useEffect(() => {
     if (onlineMode) {
@@ -79,7 +83,7 @@ function App() {
   }, [onlineMode]);
 
   useEffect(() => {
-    if (onlineMode && rankingMode) {
+    if (onlineMode && networkState) {
       ws.current.send(
         JSON.stringify({
           type: "count",
@@ -87,7 +91,7 @@ function App() {
           count: count,
         })
       );
-    } else if (!onlineMode && rankingMode) {
+    } else if (!onlineMode && networkState) {
       dispatch({ type: "ONLINE" });
     }
   }, [count]);

@@ -33,11 +33,11 @@ function Ranking(props) {
   return (
     <div className={styles.RankingDiv}>
       <h1 className={styles.title}>{networkState ? "온라인" : "오프라인"}</h1>
-      <button className={styles.onlineButton} onClick={onClickButton}>
-        로그인
-      </button>
       {networkState ? (
         <>
+          <button className={styles.onlineButton} onClick={onClickButton}>
+            로그인
+          </button>
           <button
             className={styles.onlineButton}
             onClick={() => {
