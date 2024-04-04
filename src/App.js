@@ -22,7 +22,7 @@ function App() {
   };
   const networkState = useNetwork(handleNetworkChange);
   const wsurl = // "ws://localhost:8080/popcat_server";
-    "wss://port-0-pop-cat-server-cf24lca6hcal.gksl2.cloudtype.app/popcat_server";
+    "wss://port-0-pop-cat-server-9zxht12blqg7rs5n.sel4.cloudtype.app/popcat_server";
   useEffect(() => {
     if (onlineMode) {
       console.log("connecting to  ", wsurl);
